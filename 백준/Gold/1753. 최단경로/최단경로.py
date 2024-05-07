@@ -15,6 +15,8 @@ heapq.heappush(pq, (0, st_v))
 d[st_v] = 0
 while pq:
     dist, cur_v = heapq.heappop(pq)
+    if d[cur_v] < dist:
+        continue
     for next in graph[cur_v]:
         cost, vertex = next
         next_dist = dist + cost
