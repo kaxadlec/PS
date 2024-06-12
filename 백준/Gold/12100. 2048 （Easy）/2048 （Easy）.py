@@ -122,12 +122,6 @@ def move_left(updated_board):
     return updated_board
 
 
-def print_func(board):
-    for row in board:
-        print(*row)
-    print()
-
-
 def check_max_block(board):
     level_max_block = 0
     for row in board:
