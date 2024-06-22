@@ -20,7 +20,7 @@ int main() {
     for (int i=0; i<L; i++) {
         a = s[i] - 'a' + 1;
         H = (H + a*r) % M;
-        r = r * 31; 
+        r = (r * 31) % M; 
     }
 
     cout << H << endl;
