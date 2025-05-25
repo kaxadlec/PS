@@ -6,18 +6,20 @@ first_dice = dices[0]
 top_down_dict = {0: 5, 1: 3, 2: 4, 3: 1, 4: 2, 5: 0}
 idx_set = {0, 1, 2, 3, 4, 5}
 
+def find_side_max_num(dice_idx, top_idx, down_idx):
+    remove_idx_set = {top_idx, down_idx}
+    side_idx_set = idx_set - remove_idx_set
+
+    side_max_num = 0
+    for side_idx in side_idx_set:
+        side_max_num = max(side_max_num, dices[dice_idx][side_idx])
+    return side_max_num
+
 ans = 0
 for i in range(6): # 첫번째 주사위 top을 바꾸면서 생각
     top_idx, down_idx = i, top_down_dict[i]
     first_top_num, down_top_num = first_dice[top_idx], first_dice[down_idx]
-    remove_idx_set = {top_idx, down_idx}
-    side_idx_set = idx_set - remove_idx_set
-
-    result = 0
-    first_max = 0
-    for side_idx in side_idx_set:
-        first_max = max(first_max, first_dice[side_idx])
-    result += first_max
+    result = find_side_max_num(0, top_idx, down_idx)
 
     top_num = first_top_num
     for x in range(1, N): # 첫번째 주사위 이후 주사위들 계산
@@ -28,14 +30,8 @@ for i in range(6): # 첫번째 주사위 top을 바꾸면서 생각
                 top_idx = top_down_dict[down_idx] # 주사위 윗면 인덱스 저장
                 top_num = dice[top_idx] # 주사위 top_num
                 break
-        remove_idx_set = {top_idx, down_idx}
-        side_idx_set = idx_set - remove_idx_set
+        result += find_side_max_num(x, top_idx, down_idx)
 
-        side_max_num = 0
-        for side_idx in side_idx_set:
-            side_max_num = max(side_max_num, dice[side_idx])
-        result += side_max_num
-
-    ans = max(ans, result)
+    ans = max(ans, result) # 첫번째 주사위 6개 경우의 수 max 구하기
 
 print(ans)
